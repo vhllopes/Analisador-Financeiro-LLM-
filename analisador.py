@@ -74,11 +74,9 @@ else:
 # =================================================================
 
 if not df.empty:
-    template = """Você é um analista de dados, trabalhando em um projeto de limpeza de dados. Seu trabalho é escolher uma categoria adequada para cada lançamento financeiro que vou te enviar.
+    template = """Você é um assistente contábil rigoroso. Sua tarefa é categorizar transações bancárias.
 
-    Todos são transações financeiras de uma pessoa física.
-
-    Escolha uma dentre as seguintes categorias:
+    LISTA DE CATEGORIAS PERMITIDAS (Use EXATAMENTE como escrito):
     - Alimentação
     - Receitas
     - Saúde
@@ -90,10 +88,37 @@ if not df.empty:
     - Transferências para terceiros
     - Telefone
     - Moradia
+    - Outros
 
-    Analise a descrição: {text}
+    REGRAS OBRIGATÓRIAS:
+    1. Responda APENAS com uma das palavras da lista acima.
+    2. NÃO escreva frases, apenas a categoria.
+    3. REGRA DE OURO PARA APPS:
+       - Se contiver "IFD", "IFOOD", "RAPPI" ou "UBER EATS" -> Categoria é SEMPRE "Alimentação", mesmo que tenha nomes de pessoas depois.
+       - Se contiver "UBER" ou "99APP" (sem ser eats) -> Categoria é "Transporte".
+    4. Se a descrição for apenas um nome de pessoa (sem IFD antes) -> "Transferências para terceiros".
     
-    Responda apenas com a categoria exata da lista acima. Se não souber, responda "Outros"."""
+    EXEMPLOS DE TREINAMENTO:
+    Entrada: UBER *VIAGEM
+    Saída: Transporte
+
+    Entrada: IFD*BRUNO MARQUES RODR
+    Saída: Alimentação
+
+    Entrada: IFD*GRECCO DEMAZI ALIM
+    Saída: Alimentação
+
+    Entrada: IFOOD CLUB
+    Saída: Alimentação
+
+    Entrada: RAUL BURIM DE CARVALHO
+    Saída: Transferências para terceiros
+
+    Entrada: PAGAMENTO DE SALARIO
+    Saída: Receitas
+
+    AGORA CLASSIFIQUE:
+    Entrada: {text}"""
 
     prompt = PromptTemplate.from_template(template=template)
 
