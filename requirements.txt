@@ -1,0 +1,8 @@
+pandas
+ofxparse
+langchain-groq
+python-dotenv
+tenacity
+streamlit
+plotly
+langchain-core
