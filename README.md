@@ -83,7 +83,7 @@ streamlit run dashboard.py
 
 ## 📊 Exemplo do Dashboard
 
-`![Dashboard Screenshot](screenshot/image.png)`
+![Dashboard Screenshot](screenshot/image.png)
 
 ## 👨‍💻 Autor
 
